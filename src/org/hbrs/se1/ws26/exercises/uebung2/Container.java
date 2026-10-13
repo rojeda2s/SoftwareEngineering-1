@@ -6,12 +6,12 @@ import java.util.Iterator;
 
 public class Container {
 
-    private List<ConcreteMember> members;
+    private List<Member> members;
 
     public String deleteMember(Integer id){
-        Iterator<ConcreteMember> iterator = members.iterator();
+        Iterator<Member> iterator = members.iterator();
         while(iterator.hasNext()){
-            ConcreteMember member = iterator.next();
+            ConcreteMember member = (ConcreteMember) iterator.next();
             if(member.getID().equals(id)){
                 iterator.remove();
                 return "Member:"+id+"\n Erfolgreich geloescht!";
@@ -20,19 +20,19 @@ public class Container {
             return "Member ist nicht in Liste vorhanden";
 
     }
-    public void addMember(Integer id) throws ContainerException {
+    public void addMember(Member member) throws ContainerException {
         for(Member m : members){
-            if(m.getID().equals(id)){
-                throw new ContainerException("Das Member-Objekt mit der ID "+id+"ist bereits vorhanden!");
+            if(m.getID().equals(member.getID())){
+                throw new ContainerException("Das Member-Objekt mit der ID "+member.getID()+" ist bereits vorhanden!");
             }
         }
-        members.add(new ConcreteMember(id));
+        members.add(member);
     }
     public Container() {
-        members = new ArrayList<ConcreteMember>();
+        members = new ArrayList<Member>();
     }
     public void dump(){
-        for (ConcreteMember member : members) {
+        for (Member member : members) {
             System.out.println(member.toString());
         }
     }
