@@ -11,7 +11,7 @@ public class Container {
     public String deleteMember(Integer id){
         Iterator<Member> iterator = members.iterator();
         while(iterator.hasNext()){
-            ConcreteMember member = (ConcreteMember) iterator.next();
+            Member member = iterator.next();
             if(member.getID().equals(id)){
                 iterator.remove();
                 return "Member:"+id+"\n Erfolgreich geloescht!";
