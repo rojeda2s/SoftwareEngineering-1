@@ -36,6 +36,7 @@ public class ContainerTest {
             System.setOut(ps);
         }
         String expect = "Member (ID = 1)"+System.lineSeparator()+"Member (ID = 2)"+System.lineSeparator();
+        assertEquals(expect, baos.toString());
         //selbe member nochmal hinzufügen sollte exception werfen
         assertThrows(ContainerException.class, () -> c.addMember(new ConcreteMember(1)));
         //size sollte sich nicht ändern, wenn doppelte id versucht wurde hinzuzufügen
@@ -62,5 +63,6 @@ public class ContainerTest {
             System.setOut(ps2);
         }
         String expect2 = "Member (ID = 2)"+System.lineSeparator()+"Member (ID = 1)"+System.lineSeparator();
+        assertEquals(expect2, baos.toString());
     }
 }
