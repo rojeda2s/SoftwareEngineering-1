@@ -63,6 +63,6 @@ public class ContainerTest {
             System.setOut(ps2);
         }
         String expect2 = "Member (ID = 2)"+System.lineSeparator()+"Member (ID = 1)"+System.lineSeparator();
-        assertEquals(expect2, baos.toString());
+        assertEquals(expect2, baos2.toString());
     }
 }
