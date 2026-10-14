@@ -41,6 +41,9 @@ public class ContainerTest {
         assertThrows(ContainerException.class, () -> c.addMember(new ConcreteMember(1)));
         //size sollte sich nicht ändern, wenn doppelte id versucht wurde hinzuzufügen
         assertEquals(2, c.size());
+        // nicht existierendes member loeschen
+        String s = c.deleteMember(3);
+        assertEquals("Member ist nicht in Liste vorhanden", s);
         //Erste member löschen
         c.deleteMember(1);
         assertEquals(1, c.size());
@@ -48,7 +51,7 @@ public class ContainerTest {
         c.deleteMember(2);
         assertEquals(0, c.size());
         //nicht vorhandenen Member löschen
-        String s = c.deleteMember(2);
+        s = c.deleteMember(2);
         assertEquals("Member ist nicht in Liste vorhanden", s);
         //Zweite member hinzufügen
         c.addMember(m2);
