@@ -47,6 +47,9 @@ public class ContainerTest {
         //Zweite member löschen
         c.deleteMember(2);
         assertEquals(0, c.size());
+        //nicht vorhandenen Member löschen
+        String s = c.deleteMember(2);
+        assertEquals("Member ist nicht in Liste vorhanden", s);
         //Zweite member hinzufügen
         c.addMember(m2);
         assertEquals(1, c.size());
