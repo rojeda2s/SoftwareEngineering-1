@@ -13,7 +13,7 @@ public class ContainerTest {
     @Test
     public void testContainerState() throws ContainerException {
 
-        Container c = new Container();
+        Container c = Container.getInstance();
         Member m1 = new ConcreteMember(1);
         Member m2 = new ConcreteMember(2);
 
