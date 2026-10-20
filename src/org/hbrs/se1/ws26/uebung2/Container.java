@@ -7,6 +7,7 @@ import java.util.Iterator;
 public class Container {
 
     private List<Member> members;
+    private static Container instance;
 
     public String deleteMember(Integer id){
         Iterator<Member> iterator = members.iterator();
@@ -28,8 +29,14 @@ public class Container {
         }
         members.add(member);
     }
-    public Container() {
+    private Container() {
         members = new ArrayList<Member>();
+    }
+    public static Container getInstance() {
+        if(instance == null){
+            instance = new Container();
+        }
+        return instance;
     }
     public void dump(){
         for (Member member : members) {
