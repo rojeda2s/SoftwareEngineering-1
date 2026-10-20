@@ -1,5 +1,8 @@
 package org.hbrs.se1.ws26.exercises.uebung3.persistence;
 import java.util.List;
+import java.io.*;
+
+import static org.hbrs.se1.ws26.exercises.uebung3.persistence.PersistenceException.ExceptionType.ImplementationNotAvailable;
 
 public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
 
@@ -20,7 +23,11 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
      * (Last Access: Oct, 12th 2026)
      */
     public void save(List<E> member) throws PersistenceException  {
-
+        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(location))){
+            out.writeObject(member);
+        }catch(IOException ioe){
+            throw new PersistenceException(ImplementationNotAvailable,"Fehler beim Speichern der Member.\n"+ioe.getMessage());
+        }
     }
 
     @Override
@@ -30,26 +37,14 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
      * Take also a look at the import statements above ;-!
      */
     public List<E> load() throws PersistenceException  {
-        // Some Coding hints ;-)
-
-        // ObjectInputStream ois = null;
-        // FileInputStream fis = null;
-        // List<...> newListe =  null;
-        //
-        // Initiating the Stream (can also be moved to method openConnection()... ;-)
-        // fis = new FileInputStream( " a location to a file" );
-
-        // Tipp: Use a directory (ends with "/") to implement a negative test case ;-)
-        // ois = new ObjectInputStream(fis);
-
-        // Reading and extracting the list (try .. catch ommitted here)
-        // Object obj = ois.readObject();
-
-        // if (obj instanceof List<?>) {
-        //       newListe = (List) obj;
-        // return newListe
-
-        // and finally close the streams
-        return null;
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(location))){
+            Object obj = ois.readObject();
+            if(obj instanceof List<?>){
+                return (List<E>) obj;
+            }
+            throw new PersistenceException(ImplementationNotAvailable,"Die gespeicherten Daten sind keine Liste.");
+        }catch (IOException | ClassNotFoundException e) {
+            throw new PersistenceException(ImplementationNotAvailable,e.getMessage());
+        }
     }
 }
