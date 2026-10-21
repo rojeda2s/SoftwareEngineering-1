@@ -1,15 +1,23 @@
 package se1.ws26.tests.uebung2;
 
 import org.hbrs.se1.ws26.uebung2.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ContainerTest {
-
+    private Container c;
+    @BeforeEach
+    public void setUp() {
+        c = Container.getInstance();
+        c.deleteAllMembers();
+        c.setPersistenceStrategy(null);
+    }
     @Test
     public void testContainerState() throws ContainerException {
 
@@ -27,16 +35,17 @@ public class ContainerTest {
         c.addMember(m2);
         assertEquals(2, c.size());
         //dump testen ob member in richtige reihenfolge gezeigt werden
+        MemberView view = new MemberView();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintStream ps = System.out;
-        try{
-            System.setOut(new PrintStream(baos));
-            c.dump();
-        }finally{
+        PrintStream originalOut = System.out;
+        try(PrintStream ps = new PrintStream(baos,true,StandardCharsets.UTF_8)){
             System.setOut(ps);
+            view.dump(c.getCurrentList());
+        }finally{
+            System.setOut(originalOut);
         }
         String expect = "Member (ID = 1)"+System.lineSeparator()+"Member (ID = 2)"+System.lineSeparator();
-        assertEquals(expect, baos.toString());
+        assertEquals(expect, baos.toString(StandardCharsets.UTF_8));
         //selbe member nochmal hinzufügen sollte exception werfen
         assertThrows(ContainerException.class, () -> c.addMember(new ConcreteMember(1)));
         //size sollte sich nicht ändern, wenn doppelte id versucht wurde hinzuzufügen
@@ -61,14 +70,14 @@ public class ContainerTest {
         assertEquals(2, c.size());
         //dump testen ob member in richtige reihenfolge gezeigt werden
         ByteArrayOutputStream baos2 = new ByteArrayOutputStream();
-        PrintStream ps2 = System.out;
-        try {
-            System.setOut(new PrintStream(baos2));
-            c.dump();
-        } finally {
+        PrintStream originalOut2 = System.out;
+        try (PrintStream ps2 = new PrintStream(baos2, true, StandardCharsets.UTF_8)) {
             System.setOut(ps2);
+            view.dump(c.getCurrentList());
+        } finally {
+            System.setOut(originalOut2);
         }
-        String expect2 = "Member (ID = 2)"+System.lineSeparator()+"Member (ID = 1)"+System.lineSeparator();
-        assertEquals(expect2, baos2.toString());
+        String expected2 = "Member (ID = 2)" + System.lineSeparator() + "Member (ID = 1)" + System.lineSeparator();
+        assertEquals(expected2, baos2.toString(StandardCharsets.UTF_8));
     }
 }
