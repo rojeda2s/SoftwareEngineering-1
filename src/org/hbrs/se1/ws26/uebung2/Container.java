@@ -63,4 +63,7 @@ public class Container {
         members.clear();
         members.addAll(persistenceStrategy.load());
     }
+    public void deleteAllMembers() {
+        members.clear();
+    }
 }
