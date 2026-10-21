@@ -46,10 +46,8 @@ public class Container {
         }
         return instance;
     }
-    public void dump(){
-        for (Member member : members) {
-            System.out.println(member.toString());
-        }
+    public List<Member> getCurrentList(){
+        return new ArrayList<>(members);
     }
     public int size(){return members.size();}
     public void store() throws PersistenceException{
