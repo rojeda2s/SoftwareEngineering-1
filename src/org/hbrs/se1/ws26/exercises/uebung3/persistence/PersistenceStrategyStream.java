@@ -36,6 +36,7 @@ public class PersistenceStrategyStream<E> implements PersistenceStrategy<E> {
      * Some coding examples come for free :-)
      * Take also a look at the import statements above ;-!
      */
+    @SuppressWarnings("unchecked")
     public List<E> load() throws PersistenceException  {
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(location))){
             Object obj = ois.readObject();
