@@ -66,8 +66,9 @@ public class Container {
         if(persistenceStrategy == null){
             throw new PersistenceException(NoStrategyIsSet,"Es wurde keine Persistenzstrategie gesetzt.");
         }
+        List<Member> loadedMembers = persistenceStrategy.load();
         members.clear();
-        members.addAll(persistenceStrategy.load());
+        members.addAll(loadedMembers);
     }
     public void deleteAllMembers() {
         members.clear();

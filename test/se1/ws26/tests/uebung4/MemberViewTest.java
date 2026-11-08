@@ -62,9 +62,6 @@ public class MemberViewTest {
             System.setOut(originalOut);
         }
 
-        assertTrue(resultContainsHeader(output));
-    }
-    private boolean resultContainsHeader(ByteArrayOutputStream output) {
-        return output.toString().contains("Übersicht aller User Stories");
+        assertTrue(output.toString().contains("Übersicht aller User Stories"));
     }
 }

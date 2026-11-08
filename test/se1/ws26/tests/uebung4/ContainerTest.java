@@ -68,16 +68,23 @@ public class ContainerTest {
     void testStoreAndLoad() throws Exception {
         // UserStory zum Container hinzufügen
         UserStory story = createUserStory(1);
-        container.addMember(story);
-        PersistenceStrategyStream<Member> strategy = new PersistenceStrategyStream<>();
-        strategy.setLocation("test-objects.ser");
-        container.setPersistenceStrategy(strategy);
-        container.store();
-        container.deleteAllMembers();
-        assertEquals(0, container.size());
-        container.load();
-        assertEquals(1, container.size());
-        assertEquals(1, container.getCurrentList().get(0).getID());
-        new File("test-objects.ser").delete();
+        try {
+            container.addMember(story);
+            PersistenceStrategyStream<Member> strategy = new PersistenceStrategyStream<>();
+            strategy.setLocation("test-objects.ser");
+            container.setPersistenceStrategy(strategy);
+            container.store();
+            container.deleteAllMembers();
+            assertEquals(0, container.size());
+            container.load();
+            assertEquals(1, container.size());
+            UserStory loadedStory = (UserStory) container.getCurrentList().get(0);
+            assertEquals("Login", loadedStory.getTitle());
+            assertEquals("Benuzter kann sich anmelden", loadedStory.getAcceptanceCriteria());
+            assertEquals(2, loadedStory.getAufwand());
+            assertEquals(1, loadedStory.getRisiko());
+        }finally {
+            new File("test-objects.ser").delete();
+        }
     }
 }
