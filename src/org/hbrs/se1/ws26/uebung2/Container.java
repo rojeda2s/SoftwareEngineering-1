@@ -30,6 +30,12 @@ public class Container {
 
     }
     public void addMember(Member member) throws ContainerException {
+        if(member == null){
+            throw new ContainerException("Member darf nicht null sein!");
+        }
+        if(member.getID() == null){
+            throw new ContainerException("Die ID darf nicht null sein!");
+        }
         for(Member m : members){
             if(m.getID().equals(member.getID())){
                 throw new ContainerException("Das Member-Objekt mit der ID "+member.getID()+" ist bereits vorhanden!");

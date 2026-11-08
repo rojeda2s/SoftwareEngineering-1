@@ -64,4 +64,16 @@ public class UserStory implements Member,Serializable {
     public double getPriority(){
         return priority;
     }
+    public double getStrafe(){
+        return strafe;
+    }
+    public double getAufwand(){
+        return aufwand;
+    }
+    public double getRisiko(){
+        return risiko;
+    }
+    public double getMehrwert(){
+        return mehrwert;
+    }
 }
