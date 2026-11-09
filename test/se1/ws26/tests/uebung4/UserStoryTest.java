@@ -12,10 +12,30 @@ public class UserStoryTest {
         assertEquals(4.0, sy.getPriority(), 0.0001);
     }
     @Test
-    void testNeg(){
+    void testNegMehr(){
         assertThrows(IllegalArgumentException.class, () -> {
             new UserStory(2,"Registrierung","Benutzer kann sich registrieren",-5.0,4.0,2.0,1.0,"TeamMatchAI");
         });
+    }
+    @Test
+    void testNegStrafe() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new UserStory(1, "Login", "Kriterium", 1.0, -2.0, 1.0, 1.0, "Projekt A"));
+    }
+    @Test
+    void testNegAufwand() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new UserStory(1, "Login", "Kriterium", 1.0, 2.0, -1.0, 1.0, "Projekt A"));
+    }
+    @Test
+    void testNegRisiko() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new UserStory(1, "Login", "Kriterium", 1.0, 2.0, 1.0, -1.0, "Projekt A"));
+    }
+    @Test
+    void testNullID() {
+        assertThrows(IllegalArgumentException.class, () ->
+                new UserStory(null, "Login", "Kriterium", 1.0, 2.0, 1.0, 1.0, "Projekt A"));
     }
     @Test
     void testNaN(){

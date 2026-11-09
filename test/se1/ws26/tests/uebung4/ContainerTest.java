@@ -87,4 +87,12 @@ public class ContainerTest {
             new File("test-objects.ser").delete();
         }
     }
+    @Test
+    void testDuplicateUserStoryIDIsRejected() throws ContainerException {
+        UserStory us1 = createUserStory(1);
+        UserStory us2 = new UserStory(1, "Registrierung", "Kriterium 2", 5.0, 2.0, 1.0, 1.0, "Projekt B");
+        container.addMember(us1);
+        assertThrows(ContainerException.class, () -> container.addMember(us2));
+        assertEquals(1, container.size());
+    }
 }
