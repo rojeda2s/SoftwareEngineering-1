@@ -22,6 +22,7 @@ public class CommandLine {
             switch (input) {
                 default:
                     System.out.println(input+" ist ein Unbekannter Befehl.");
+                    System.out.println("Gebe help ein um alle moegliche Befehle zu sehen.");
                     break;
                 case "exit":
                     System.out.println("Programm wird beendet.");
@@ -56,7 +57,7 @@ public class CommandLine {
                     }
                     break;
                 case "help":
-                    System.out.println("Mögliche befehle:\n>exit Beendet das Programm\n>enter Trage eine neue UserStory ein\n>store Speicher die zur zeitige Liste\n>load Lade die gespeicherte Liste\n>dump Zeige alle UserStories in der zur zeitigen Liste nach Priorität sortiert an");
+                    help();
                     break;
             }
         }
@@ -81,5 +82,14 @@ public class CommandLine {
         UserStory us = new UserStory(id,title,acceptanceCriteria,mehrwert,strafe,aufwand,risiko,projekt);
         c.addMember(us);
         System.out.println("UserStory hinzugefügt.");
+    }
+    private void help(){
+        System.out.println("Mögliche Befehle:");
+        System.out.println("enter - Neue UserStory eingeben");
+        System.out.println("store - UserStories speichern");
+        System.out.println("load  - UserStories laden");
+        System.out.println("dump  - UserStories anzeigen");
+        System.out.println("help  - Hilfe anzeigen");
+        System.out.println("exit  - Programm beenden");
     }
 }

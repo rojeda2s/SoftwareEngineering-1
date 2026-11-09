@@ -24,6 +24,9 @@ public class UserStory implements Member,Serializable {
         validateNumber(strafe, "Strafe");
         validateNumber(aufwand, "Aufwand");
         validateNumber(risiko, "Risiko");
+        if(id==null){
+            throw new IllegalArgumentException("ID darf nicht null sein.");
+        }
         if(aufwand+risiko<=0){
             throw new IllegalArgumentException("Aufwand+Risiko darf nicht 0 sein!");
         }
